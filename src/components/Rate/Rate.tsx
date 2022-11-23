@@ -15,7 +15,11 @@ const Rate = () => {
 
   return (
     <div>
-      <RateFromAnt style={{ marginRight: '5px' }} value={valueOfRate} />
+      <RateFromAnt
+        style={{ marginRight: '5px' }}
+        value={valueOfRate}
+        disabled
+      />
       <span>({length})</span>
     </div>
   )

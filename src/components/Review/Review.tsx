@@ -48,7 +48,7 @@ const Review = () => {
         <Rate />
       </div>
 
-      {screens.xs ? <Row>See more revies</Row> : Reviews}
+      {screens.xs ? <Row>See more reviews</Row> : Reviews}
     </>
   )
 }
