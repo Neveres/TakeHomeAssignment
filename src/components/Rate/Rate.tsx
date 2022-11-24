@@ -1,16 +1,19 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useContext } from 'react'
 import { Rate as RateFromAnt } from 'antd'
-import { reviews } from 'src/__mock__'
-
-const { length } = reviews
+import { AppRedux } from 'src/App'
 
 const Rate = () => {
+  const {
+    state: { reviews },
+  } = useContext(AppRedux)
+
+  const { length } = reviews
   const valueOfRate = useMemo(
     () =>
       Math.round(
         reviews.reduce((sum, review) => sum + review.rate, 0) / length,
       ),
-    [],
+    [reviews, length],
   )
 
   return (
