@@ -14,27 +14,11 @@ export const reviewContainer = css`
     }
   }
 
-  .comment-container {
-    padding: 10px 0;
-
-    .comment-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 7px;
-
-      .comment-date {
-        font-size: 13px;
-      }
-    }
-
-    .comment-content {
-      margin-bottom: 7px;
-      font-size: 12px;
-    }
-
-    .comment-pic {
-      width: 50px;
-      margin-right: 10px;
-    }
+  .see-more-reviews {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
   }
 `

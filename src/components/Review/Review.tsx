@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React, { useMemo, useContext } from 'react'
-import { Row, Grid, Rate as RateFromAnt } from 'antd'
-import { Rate } from 'src/components'
+import React, { useContext, useState, useCallback, useMemo } from 'react'
+import { Grid, Modal } from 'antd'
+import { Rate, Comments } from 'src/components'
 import { AppRedux } from 'src/App'
 import { reviewContainer } from './styles'
 
@@ -13,35 +13,15 @@ const Review = () => {
     state: { reviews },
   } = useContext(AppRedux)
 
-  const lastIndexOfReviews = useMemo(() => reviews.length - 1, [reviews.length])
+  const isMobile = useMemo(() => !!screens.xs, [screens.xs])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const showModal = useCallback(() => {
+    setIsModalOpen(true)
+  }, [])
 
-  const Comments = useMemo(
-    () =>
-      reviews.map(({ name, rate, comment, date, images }, index) => (
-        <div
-          className="comment-container"
-          key={`${name}-${rate}-${date}`}
-          style={{
-            borderBottom: index === lastIndexOfReviews ? 0 : '1px solid black',
-          }}
-        >
-          <div className="comment-header">
-            <div>
-              {name}&ensp;
-              <RateFromAnt value={rate} disabled />
-            </div>
-            <div className="comment-date">{date}</div>
-          </div>
-          <div className="comment-content">{comment}</div>
-          <div>
-            {images?.map((image) => (
-              <img className="comment-pic" key={image} src={image} />
-            ))}
-          </div>
-        </div>
-      )),
-    [lastIndexOfReviews, reviews],
-  )
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+  }, [])
 
   return (
     <div css={reviewContainer}>
@@ -49,7 +29,21 @@ const Review = () => {
         <div className="header">Reviews</div>
         <Rate />
       </div>
-      {screens.xs ? <Row>See more reviews</Row> : Comments}
+      {isMobile ? (
+        <ins className="see-more-reviews" onClick={showModal}>
+          See more reviews
+        </ins>
+      ) : (
+        <Comments reviews={reviews} isMobile={isMobile} />
+      )}
+      <Modal
+        title="Reviews"
+        open={isModalOpen}
+        onCancel={closeModal}
+        footer={[]}
+      >
+        <Comments reviews={reviews} isMobile={isMobile} />
+      </Modal>
     </div>
   )
 }
